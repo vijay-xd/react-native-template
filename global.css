@@ -1,3 +1,31 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* ===== PacePro Color System ===== */
+
+:root {
+  /* Background Colors */
+  --color-bg-primary: #1a1a1a;
+  --color-bg-card: #2a2a2a;
+  --color-bg-card-light: #333333;
+
+  /* Orange Accent */
+  --color-accent: #F47B20;
+  --color-accent-light: #F5923E;
+  --color-accent-dark: #D96A10;
+
+  /* Text Colors */
+  --color-text-primary: #FFFFFF;
+  --color-text-secondary: #A0A0A0;
+  --color-text-muted: #707070;
+
+  /* Stat Colors */
+  --color-steps-icon: #4A90D9;
+  --color-heart-icon: #4CD964;
+  --color-fire-icon: #F47B20;
+
+  /* Chart Colors */
+  --color-bar-orange: #F47B20;
+  --color-bar-brown: #6B3A1F;
+}
