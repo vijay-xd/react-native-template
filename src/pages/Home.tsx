@@ -10,9 +10,10 @@ import BottomBar from '../components/BottomBar';
 
 type Props = {
     runnerImage: ImageSourcePropType;
+    onOpenChallenges?: () => void;
 };
 
-export default function Home({ runnerImage }: Props) {
+export default function Home({ runnerImage, onOpenChallenges }: Props) {
     return (
         <View style={{ flex: 1, backgroundColor: '#1a1a1a' }}>
             <SafeAreaView style={{ flex: 1 }}>
@@ -81,6 +82,47 @@ export default function Home({ runnerImage }: Props) {
 
                     {/* Calories Card */}
                     <CaloriesCard />
+
+                    {/* Challenges Quick Access */}
+                    {onOpenChallenges && (
+                        <TouchableOpacity
+                            onPress={onOpenChallenges}
+                            activeOpacity={0.85}
+                            style={{
+                                marginTop: 16,
+                                backgroundColor: '#111',
+                                borderRadius: 16,
+                                padding: 18,
+                                borderWidth: 1,
+                                borderColor: '#222',
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                            }}
+                        >
+                            <View
+                                style={{
+                                    width: 44,
+                                    height: 44,
+                                    borderRadius: 12,
+                                    backgroundColor: 'rgba(132,204,22,0.1)',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    marginRight: 14,
+                                }}
+                            >
+                                <Text style={{ fontSize: 22 }}>🏆</Text>
+                            </View>
+                            <View style={{ flex: 1 }}>
+                                <Text style={{ color: '#fff', fontSize: 15, fontWeight: '700' }}>
+                                    Daily Challenges
+                                </Text>
+                                <Text style={{ color: '#666', fontSize: 12, marginTop: 2 }}>
+                                    Complete tasks to earn XP & rewards
+                                </Text>
+                            </View>
+                            <Ionicons name="chevron-forward" size={20} color="#555" />
+                        </TouchableOpacity>
+                    )}
                 </ScrollView>
             </SafeAreaView>
 
