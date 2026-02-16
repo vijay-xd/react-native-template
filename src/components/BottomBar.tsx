@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, TouchableOpacity, Dimensions, Text } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { COLORS, SIZES } from '../constants/theme';
 
 type TabItem = {
     icon: keyof typeof Ionicons.glyphMap;
@@ -16,8 +17,8 @@ const TABS: TabItem[] = [
     { icon: 'person-outline', activeIcon: 'person', label: 'Profile' },
 ];
 
-const BAR_HEIGHT = 72;
-const NEON = '#84cc16';
+const BAR_HEIGHT = SIZES.bottomBarHeight;
+const NEON = COLORS.primary;
 
 type Props = {
     activeTab?: number;
