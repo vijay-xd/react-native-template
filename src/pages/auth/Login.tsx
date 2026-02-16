@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAuth } from '../../context/AuthContext';
+import { COLORS } from '../../constants/theme';
 
 export default function Login() {
     const { signInWithEmail, signInAnonymously } = useAuth();
@@ -26,9 +27,9 @@ export default function Login() {
     };
 
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: '#000000', padding: 24, justifyContent: 'center' }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.background, padding: 24, justifyContent: 'center' }}>
             <View>
-                <Text style={{ color: '#84cc16', fontSize: 32, fontWeight: 'bold', marginBottom: 8 }}>
+                <Text style={{ color: COLORS.primary, fontSize: 32, fontWeight: 'bold', marginBottom: 8 }}>
                     RUNNIT.
                 </Text>
                 <Text style={{ color: '#888', fontSize: 16, marginBottom: 48 }}>
@@ -39,13 +40,13 @@ export default function Login() {
                     <Text style={{ color: '#fff', marginBottom: 8, fontWeight: '600' }}>Email Address</Text>
                     <TextInput
                         style={{
-                            backgroundColor: '#1A1A1A',
-                            color: '#fff',
+                            backgroundColor: COLORS.surfaceLight,
+                            color: COLORS.textPrimary,
                             padding: 16,
                             borderRadius: 12,
                             fontSize: 16,
                             borderWidth: 1,
-                            borderColor: '#333',
+                            borderColor: COLORS.surface,
                         }}
                         placeholder="runner@example.com"
                         placeholderTextColor="#666"
@@ -61,11 +62,11 @@ export default function Login() {
                     disabled={loading}
                     activeOpacity={0.8}
                     style={{
-                        backgroundColor: '#84cc16',
+                        backgroundColor: COLORS.primary,
                         padding: 16,
                         borderRadius: 12,
                         alignItems: 'center',
-                        shadowColor: '#80ff00',
+                        shadowColor: COLORS.neonGlow,
                         shadowOffset: { width: 0, height: 4 },
                         shadowOpacity: 0.3,
                         shadowRadius: 8,

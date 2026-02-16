@@ -3,6 +3,7 @@ import { View, Text, ScrollView, TouchableOpacity, ImageSourcePropType } from 'r
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 
+import { COLORS } from '../constants/theme';
 import DistanceCard from '../components/DistanceCard';
 import StatsRow from '../components/StatsRow';
 import CaloriesCard from '../components/CaloriesCard';
@@ -15,7 +16,7 @@ type Props = {
 
 export default function Home({ runnerImage, onOpenChallenges }: Props) {
     return (
-        <View style={{ flex: 1, backgroundColor: '#1a1a1a' }}>
+        <View style={{ flex: 1, backgroundColor: COLORS.surfaceLight }}>
             <SafeAreaView style={{ flex: 1 }}>
                 <ScrollView
                     style={{ flex: 1 }}
@@ -38,7 +39,7 @@ export default function Home({ runnerImage, onOpenChallenges }: Props) {
                             <Ionicons
                                 name="walk"
                                 size={24}
-                                color="#F47B20"
+                                color={COLORS.orange}
                                 style={{ marginLeft: 6 }}
                             />
                         </View>
@@ -52,7 +53,7 @@ export default function Home({ runnerImage, onOpenChallenges }: Props) {
                                 justifyContent: 'center',
                             }}
                             activeOpacity={0.7}>
-                            <Ionicons name="notifications" size={20} color="#F47B20" />
+                            <Ionicons name="notifications" size={20} color={COLORS.orange} />
                         </TouchableOpacity>
                     </View>
 

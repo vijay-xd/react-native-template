@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { COLORS } from '../constants/theme';
 import {
     View,
     Text,
@@ -18,7 +19,7 @@ import { formatDuration, formatPace, formatDistance } from '../utils/geo';
 import { saveRun, updateProfileAfterRun, calculateXP } from '../services/RunService';
 import CellCaptureToast from '../components/CellCaptureToast';
 
-const NEON = '#84cc16';
+const NEON = COLORS.primary;
 
 export default function RunScreen() {
     const { user } = useAuth();

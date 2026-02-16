@@ -1,6 +1,6 @@
-import React from 'react';
 import { View, Text, Image, ImageSourcePropType } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { COLORS } from '../constants/theme';
 
 type Props = {
     runnerImage: ImageSourcePropType;
@@ -10,8 +10,8 @@ export default function DistanceCard({ runnerImage }: Props) {
     return (
         <View
             style={{
-                backgroundColor: '#F47B20',
-                borderRadius: 24,
+                backgroundColor: COLORS.orange,
+                borderRadius: 22,
                 overflow: 'hidden',
                 minHeight: 210,
                 position: 'relative',

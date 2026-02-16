@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { COLORS, CREW_COLORS } from '../constants/theme';
 import {
     View,
     Text,
@@ -15,9 +16,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { fetchCrews, createCrew, joinCrew, fetchCrewDetails } from '../services/SocialService';
 import { useAuth } from '../context/AuthContext';
 
-const NEON = '#84cc16';
-
-const CREW_COLORS = ['#84cc16', '#ef4444', '#3b82f6', '#f97316', '#8b5cf6', '#ec4899', '#14b8a6', '#eab308'];
+const NEON = COLORS.primary;
 
 export default function CrewScreen() {
     const { user } = useAuth();

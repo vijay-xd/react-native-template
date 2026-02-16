@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { COLORS } from '../constants/theme';
+
 import {
     View,
     Text,
@@ -22,7 +24,7 @@ import {
     formatStartTime,
 } from '../services/RunRoomService';
 
-const NEON = '#84cc16';
+const NEON = COLORS.primary;
 
 const PACE_OPTIONS: RoomPace[] = ['slow', 'medium', 'fast'];
 

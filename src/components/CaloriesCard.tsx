@@ -1,6 +1,6 @@
-import React from 'react';
 import { View, Text } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { COLORS } from '../constants/theme';
 
 const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
@@ -44,9 +44,9 @@ export default function CaloriesCard() {
                             backgroundColor: '#3a2210',
                             alignItems: 'center',
                             justifyContent: 'center',
-                            marginRight: 10,
+                            marginRight: 12,
                         }}>
-                        <Ionicons name="flame" size={18} color="#F47B20" />
+                        <Ionicons name="flame" size={18} color={COLORS.orange} />
                     </View>
                     <Text style={{ color: '#fff', fontSize: 16, fontWeight: '600' }}>Calories Burnt</Text>
                 </View>
@@ -69,6 +69,10 @@ export default function CaloriesCard() {
                 {BAR_DATA.map((bar, index) => {
                     const leftH = (bar.left / 100) * MAX_BAR_HEIGHT;
                     const rightH = (bar.right / 100) * MAX_BAR_HEIGHT;
+                    // Assuming 'day' and 'barHeight' are meant to be derived from 'bar' or 'index'
+                    // For now, using 'leftH' as 'barHeight' and 'bar.isHighlight' for 'day.active'
+                    const barHeight = leftH; // Placeholder, adjust if 'barHeight' is meant to be different
+                    const dayActive = bar.isHighlight; // Placeholder for 'day.active'
                     return (
                         <View key={index} style={{ alignItems: 'center', flex: 1 }}>
                             <View
@@ -80,9 +84,9 @@ export default function CaloriesCard() {
                                 <View
                                     style={{
                                         width: 14,
-                                        height: leftH,
-                                        borderRadius: 5,
-                                        backgroundColor: '#F47B20',
+                                        height: barHeight,
+                                        borderRadius: 7,
+                                        backgroundColor: dayActive ? COLORS.orange : '#331a00',
                                     }}
                                 />
                                 <View

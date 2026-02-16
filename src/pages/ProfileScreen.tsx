@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { COLORS } from '../constants/theme';
 import {
     View,
     Text,
@@ -10,48 +11,47 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useAuth } from '../context/AuthContext';
-import { fetchProfile, updateProfile } from '../services/SocialService';
-import { fetchRunHistory } from '../services/SocialService';
-import { getTitleForLevel, getNextTitle, RUNNER_TRAITS } from '../constants/progression';
-import RunCard from '../components/RunCard';
-import RunDetailModal from '../components/RunDetailModal';
+import { fetchProfile, updateProfile, fetchUserAchievements } from '../services/SocialService';
+import EditProfileModal from '../components/EditProfileModal';
+import { ACHIEVEMENTS, Achievement } from '../constants/achievements';
 
-const NEON = '#84cc16';
+import { getTitleForLevel, getNextTitle, RUNNER_TRAITS } from '../constants/progression';
+
+
+const NEON = COLORS.primary;
 
 export default function ProfileScreen() {
     const { user, signOut } = useAuth();
     const [profile, setProfile] = useState<any>(null);
-    const [runs, setRuns] = useState<any[]>([]);
+
     const [loading, setLoading] = useState(true);
     const [refreshing, setRefreshing] = useState(false);
-    const [selectedRun, setSelectedRun] = useState<any>(null);
-    const [showRunDetail, setShowRunDetail] = useState(false);
+    const [editModalVisible, setEditModalVisible] = useState(false);
+    const [unlockedAchievements, setUnlockedAchievements] = useState<string[]>([]);
+
+
 
     const loadData = async () => {
-        const [profileData, runsData] = await Promise.all([
+        if (!user) return;
+
+        const [profileData, achievementsData] = await Promise.all([
             fetchProfile(),
-            fetchRunHistory(10),
+            fetchUserAchievements(user.id),
         ]);
         setProfile(profileData);
-        setRuns(runsData);
+
+        setUnlockedAchievements(achievementsData);
+
         setLoading(false);
         setRefreshing(false);
     };
+
 
     useEffect(() => {
         loadData();
     }, []);
 
-    const handleRunPress = (run: any) => {
-        setSelectedRun({
-            distanceKm: run.distance_km || 0,
-            durationMs: run.duration_ms || 0,
-            avgPace: run.avg_pace || 0,
-            calories: run.calories_burned || 0,
-            startedAt: run.started_at,
-        });
-        setShowRunDetail(true);
-    };
+
 
     if (loading) {
         return (
@@ -79,21 +79,36 @@ export default function ProfileScreen() {
                         <Text style={{ color: '#fff', fontSize: 28, fontWeight: '900', fontFamily: 'Inter-Bold' }}>
                             Profile
                         </Text>
-                        <TouchableOpacity
-                            onPress={signOut}
-                            style={{
-                                paddingHorizontal: 14,
-                                paddingVertical: 8,
-                                borderRadius: 8,
-                                backgroundColor: '#1A1A1A',
-                                borderWidth: 1,
-                                borderColor: '#333',
-                            }}
-                        >
-                            <Text style={{ color: '#ef4444', fontSize: 12, fontWeight: 'bold', fontFamily: 'Inter-Bold' }}>
-                                Sign Out
-                            </Text>
-                        </TouchableOpacity>
+                        <View style={{ flexDirection: 'row', gap: 12 }}>
+                            <TouchableOpacity
+                                onPress={() => setEditModalVisible(true)}
+                                style={{
+                                    paddingHorizontal: 14,
+                                    paddingVertical: 8,
+                                    borderRadius: 8,
+                                    backgroundColor: '#222',
+                                    borderWidth: 1,
+                                    borderColor: '#333',
+                                }}
+                            >
+                                <Ionicons name="create-outline" size={16} color="#fff" />
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                onPress={signOut}
+                                style={{
+                                    paddingHorizontal: 14,
+                                    paddingVertical: 8,
+                                    borderRadius: 8,
+                                    backgroundColor: '#1A1A1A',
+                                    borderWidth: 1,
+                                    borderColor: '#333',
+                                }}
+                            >
+                                <Text style={{ color: '#ef4444', fontSize: 12, fontWeight: 'bold', fontFamily: 'Inter-Bold' }}>
+                                    Sign Out
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
 
                     {/* Profile Card */}
@@ -182,6 +197,43 @@ export default function ProfileScreen() {
                         </View>
                     </View>
 
+                    {/* Achievements */}
+                    <Text style={{ color: '#fff', fontSize: 18, fontWeight: '800', fontFamily: 'Inter-Bold', marginBottom: 12 }}>
+                        🏆 Achievements
+                    </Text>
+                    <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginBottom: 20 }}>
+                        {ACHIEVEMENTS.map((achievement) => {
+                            const unlocked = unlockedAchievements.includes(achievement.id);
+                            return (
+                                <View
+                                    key={achievement.id}
+                                    style={{
+                                        marginRight: 10,
+                                        width: 140,
+                                        height: 140,
+                                        backgroundColor: '#111',
+                                        borderRadius: 12,
+                                        padding: 12,
+                                        borderWidth: 1,
+                                        borderColor: unlocked ? NEON : '#333',
+                                        opacity: unlocked ? 1 : 0.5,
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                    }}
+                                >
+                                    <achievement.icon size={32} color={unlocked ? NEON : '#555'} strokeWidth={1.5} />
+                                    <Text style={{ color: '#fff', fontSize: 12, fontWeight: 'bold', fontFamily: 'Inter-Bold', marginTop: 12, textAlign: 'center' }}>
+                                        {achievement.title}
+                                    </Text>
+                                    <Text style={{ color: '#888', fontSize: 10, fontFamily: 'Inter-Regular', marginTop: 4, textAlign: 'center' }}>
+                                        {achievement.description}
+                                    </Text>
+                                </View>
+                            );
+                        })}
+
+                    </ScrollView>
+
                     {/* Runner Traits */}
                     <Text style={{ color: '#fff', fontSize: 18, fontWeight: '800', fontFamily: 'Inter-Bold', marginBottom: 12 }}>
                         ⚡ Runner Traits
@@ -217,46 +269,17 @@ export default function ProfileScreen() {
                         ))}
                     </View>
 
-                    {/* Recent Runs */}
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
-                        <Text style={{ color: '#fff', fontSize: 18, fontWeight: '800', fontFamily: 'Inter-Bold' }}>
-                            Recent Runs
-                        </Text>
-                        <Text style={{ color: '#666', fontSize: 13, fontFamily: 'SpaceMono-Regular' }}>
-                            {runs.length} runs
-                        </Text>
-                    </View>
 
-                    {runs.length === 0 ? (
-                        <View style={{ alignItems: 'center', paddingVertical: 40 }}>
-                            <Ionicons name="walk-outline" size={48} color="#333" />
-                            <Text style={{ color: '#555', fontSize: 15, marginTop: 12, fontFamily: 'Inter-Regular' }}>
-                                No runs yet. Start your first run!
-                            </Text>
-                        </View>
-                    ) : (
-                        runs.map((run: any) => (
-                            <RunCard
-                                key={run.id}
-                                distanceKm={run.distance_km || 0}
-                                durationMs={run.duration_ms || 0}
-                                areaKm2={run.area_captured_km2 || 0}
-                                avgPace={run.avg_pace || 0}
-                                cellsCaptured={(run.cells_captured || []).length}
-                                xpEarned={run.xp_earned || 0}
-                                startedAt={run.started_at}
-                                onPress={() => handleRunPress(run)}
-                            />
-                        ))
-                    )}
                 </ScrollView>
             </SafeAreaView>
 
-            {/* Run Detail Modal */}
-            <RunDetailModal
-                visible={showRunDetail}
-                onClose={() => setShowRunDetail(false)}
-                run={selectedRun}
+
+
+            <EditProfileModal
+                visible={editModalVisible}
+                onClose={() => setEditModalVisible(false)}
+                onSave={loadData}
+                initialData={profile}
             />
         </View>
     );

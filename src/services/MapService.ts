@@ -1,6 +1,7 @@
 import Mapbox from '@rnmapbox/maps';
 import { latLngToCell, cellToBoundary } from 'h3-js';
 import { supabase } from '../lib/supabase';
+import { COLORS } from '../constants/theme';
 
 // Initialize Mapbox
 Mapbox.setAccessToken(process.env.EXPO_PUBLIC_MAPBOX_TOKEN || '');
@@ -99,11 +100,11 @@ export function cellsToGeoJSON(
                 cellType: cell.cell_type,
                 isOwn,
                 fillColor: isOwn
-                    ? (cell.crew_color || '#84cc16') // Neon green for own cells
-                    : '#ef4444', // Red for enemy cells
+                    ? (cell.crew_color || COLORS.primary) // Neon green for own cells
+                    : COLORS.red, // Red for enemy cells
                 strokeColor: isOwn
-                    ? (cell.crew_color || '#84cc16')
-                    : '#ef4444',
+                    ? (cell.crew_color || COLORS.primary)
+                    : COLORS.red,
             },
             geometry: {
                 type: 'Polygon' as const,

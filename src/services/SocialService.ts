@@ -1,5 +1,7 @@
 import { supabase } from '../lib/supabase';
 
+
+
 // ─────────────────────────────────────────────
 // FRIEND REQUESTS
 // ─────────────────────────────────────────────
@@ -284,7 +286,7 @@ export async function fetchLeaderboard(scope: LeaderboardScope, params?: {
         const { data, error } = await supabase.rpc('get_nearby_leaderboard', {
             p_lat: params.lat,
             p_lng: params.lng,
-            p_radius_km: 5,
+            p_radius_km: 50,
         });
         if (error) {
             console.error('Leaderboard error:', error);
@@ -411,3 +413,66 @@ export async function fetchActiveParty() {
     }
     return data;
 }
+
+// ─────────────────────────────────────────────
+// ACHIEVEMENTS & AVATAR
+// ─────────────────────────────────────────────
+
+export async function uploadAvatar(uri: string) {
+    try {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!user) throw new Error('Not authenticated');
+
+        const fileName = `${user.id}/${Date.now()}.jpg`;
+
+        const response = await fetch(uri);
+        const blob = await response.blob();
+
+        const { data, error } = await supabase.storage
+            .from('avatars')
+            .upload(fileName, blob, {
+                contentType: 'image/jpeg',
+                upsert: true,
+            });
+
+        if (error) throw error;
+
+        const { data: publicData } = supabase.storage
+            .from('avatars')
+            .getPublicUrl(fileName);
+
+        return publicData.publicUrl;
+    } catch (error) {
+        console.error('Error uploading avatar:', error);
+        return null;
+    }
+}
+
+export async function fetchUserAchievements(userId: string) {
+    const { data, error } = await supabase
+        .from('user_achievements')
+        .select('achievement_id')
+        .eq('user_id', userId);
+
+    if (error) {
+        // If table doesn't exist yet, return empty
+        if (error.code === '42P01') return [];
+        console.error('Error fetching achievements:', error);
+        return [];
+    }
+    return data?.map((a: any) => a.achievement_id) || [];
+}
+
+export async function unlockAchievement(userId: string, achievementId: string) {
+    const { error } = await supabase
+        .from('user_achievements')
+        .insert({ user_id: userId, achievement_id: achievementId })
+        .select()
+        .single();
+
+    // Ignore duplicate key error (already unlocked)
+    if (error && error.code !== '23505') {
+        console.error('Error unlocking achievement:', error);
+    }
+}
+

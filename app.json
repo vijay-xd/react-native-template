@@ -15,6 +15,19 @@
         {
           "locationAlwaysAndWhenInUsePermission": "Runnit needs your location to track runs and capture territory."
         }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Allow Run It to access your photos to update your profile picture."
+        }
+      ],
+      [
+        "@rnmapbox/maps",
+        {
+          "RNMapboxMapsImpl": "mapbox",
+          "RNMapboxMapsDownloadToken": "pk.eyJ1Ijoia2l2aWpheTA5IiwiYSI6ImNtbGgxMjR5azAwbDIzZ3F3bG9icmtvbmcifQ.bOaVvvXvrxu6HM8RCyggYQ"
+        }
       ]
     ],
     "orientation": "portrait",

@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useCallback } from 'react';
 import {
     View,
@@ -5,11 +6,13 @@ import {
     TouchableOpacity,
     ScrollView,
     RefreshControl,
-    Alert,
     Animated,
+    Dimensions,
+    Alert,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
+import { COLORS } from '../constants/theme';
 import {
     ChallengeDefinition,
     RARITY_COLORS,
@@ -23,7 +26,7 @@ import {
     UserChallengeState,
 } from '../services/ChallengeService';
 
-const NEON = '#84cc16';
+const NEON = COLORS.primary;
 
 type Tab = 'daily' | 'weekly' | 'achievements';
 
@@ -53,7 +56,7 @@ export default function ChallengesScreen() {
     const handleClaim = async (challengeId: string, xpReward: number) => {
         const success = await claimChallengeReward(challengeId, xpReward);
         if (success) {
-            Alert.alert('🎉 Reward Claimed!', `+${xpReward} XP added to your profile`);
+            Alert.alert('🎉 Reward Claimed!', `+ ${xpReward} XP added to your profile`);
             loadChallenges(); // Refresh
         } else {
             Alert.alert('Note', 'Rewards will sync when connected.');
@@ -88,7 +91,7 @@ export default function ChallengesScreen() {
             const diff = endOfDay.getTime() - now.getTime();
             const hours = Math.floor(diff / 3600000);
             const mins = Math.floor((diff % 3600000) / 60000);
-            return `${hours}h ${mins}m`;
+            return `${hours}h ${mins} m`;
         } else if (activeTab === 'weekly') {
             const endOfWeek = new Date(now);
             const daysUntilSunday = 7 - now.getDay();
@@ -97,7 +100,7 @@ export default function ChallengesScreen() {
             const diff = endOfWeek.getTime() - now.getTime();
             const days = Math.floor(diff / 86400000);
             const hours = Math.floor((diff % 86400000) / 3600000);
-            return `${days}d ${hours}h`;
+            return `${days}d ${hours} h`;
         }
         return '';
     };
@@ -244,7 +247,7 @@ function ChallengeCard({
         : progress;
 
     const displayValue = challenge.category === 'pace'
-        ? (challenge.currentValue > 0 ? `${challenge.currentValue.toFixed(1)} ${challenge.unit}` : `-- ${challenge.unit}`)
+        ? (challenge.currentValue > 0 ? `${challenge.currentValue.toFixed(1)} ${challenge.unit} ` : `-- ${challenge.unit} `)
         : `${Math.min(challenge.currentValue, challenge.target)}/${challenge.target} ${challenge.unit}`;
 
     return (

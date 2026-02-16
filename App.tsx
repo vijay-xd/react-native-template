@@ -7,6 +7,7 @@ import { View, ActivityIndicator, TouchableOpacity, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React, { useState } from 'react';
+import { COLORS } from './src/constants/theme';
 
 import './global.css';
 
@@ -16,6 +17,7 @@ import SocialScreen from './src/pages/SocialScreen';
 import ProfileScreen from './src/pages/ProfileScreen';
 import LeaderboardScreen from './src/pages/LeaderboardScreen';
 import CrewScreen from './src/pages/CrewScreen';
+import DashboardScreen from './src/pages/DashboardScreen';
 import RunRoomsScreen from './src/pages/RunRoomsScreen';
 import RoomLobbyScreen from './src/pages/RoomLobbyScreen';
 import Login from './src/pages/auth/Login';
@@ -23,7 +25,7 @@ import ChallengesScreen from './src/pages/ChallengesScreen';
 import BottomBar from './src/components/BottomBar';
 
 const Stack = createNativeStackNavigator();
-const NEON = '#84cc16';
+const NEON = COLORS.primary;
 const runnerImage = require('./assets/runner.png');
 
 type SocialSubTab = 'friends' | 'crews' | 'rooms' | 'leaderboard';
@@ -49,11 +51,8 @@ function MainApp() {
         }
         return <Home runnerImage={runnerImage} onOpenChallenges={() => setHomeSubScreen('challenges')} />;
       case 1:
-        // Map tab — Run Rooms & Matchmaking
-        if (activeRoomId) {
-          return <RoomLobbyScreen roomId={activeRoomId} onBack={() => setActiveRoomId(null)} />;
-        }
-        return <RunRoomsScreen onOpenRoom={(roomId) => setActiveRoomId(roomId)} />;
+        // Dashboard Tab (formerly Map/RunRooms)
+        return <DashboardScreen />;
       case 2:
         return <RunScreen />;
       case 3:
@@ -96,9 +95,9 @@ function MainApp() {
                 gap: 4,
                 paddingVertical: 9,
                 borderRadius: 8,
-                backgroundColor: socialSubTab === tab.key ? NEON : '#1A1A1A',
+                backgroundColor: socialSubTab === tab.key ? NEON : COLORS.surfaceLight,
                 borderWidth: 1,
-                borderColor: socialSubTab === tab.key ? NEON : '#333',
+                borderColor: socialSubTab === tab.key ? NEON : COLORS.border,
               }}
             >
               <Text style={{ fontSize: 12 }}>{tab.icon}</Text>
@@ -126,7 +125,7 @@ function MainApp() {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: '#000' }}>
+    <View style={{ flex: 1, backgroundColor: COLORS.background }}>
       {renderScreen()}
       <BottomBar
         activeTab={activeTab}

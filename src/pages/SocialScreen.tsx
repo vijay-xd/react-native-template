@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { COLORS } from '../constants/theme';
 import {
     View,
     Text,
@@ -22,7 +23,7 @@ import {
 import { useAuth } from '../context/AuthContext';
 import { getTitleForLevel } from '../constants/progression';
 
-const NEON = '#84cc16';
+const NEON = COLORS.primary;
 
 export default function SocialScreen() {
     const { user } = useAuth();

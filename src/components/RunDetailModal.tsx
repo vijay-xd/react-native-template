@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Modal, Dimensions } from 'react-native';
+import { View, Text, TouchableOpacity, Modal, Dimensions, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { COLORS } from '../constants/theme';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
@@ -19,7 +20,7 @@ type Props = {
 function formatPace(pace: number): string {
     const minutes = Math.floor(pace);
     const seconds = Math.round((pace - minutes) * 60);
-    return `${minutes}'${String(seconds).padStart(2, '0')}"`;
+    return `${minutes} '${String(seconds).padStart(2, '0')}"`;
 }
 
 function formatDuration(ms: number): string {
@@ -79,7 +80,7 @@ export default function RunDetailModal({ visible, onClose, run }: Props) {
                 {/* RUN DETAILS header */}
                 <Text
                     style={{
-                        color: '#F47B20',
+                        color: COLORS.orange,
                         fontSize: 13,
                         fontWeight: 'bold',
                         letterSpacing: 3,
@@ -113,6 +114,8 @@ export default function RunDetailModal({ visible, onClose, run }: Props) {
                 >
                     KILOMETERS
                 </Text>
+
+
 
                 {/* Pace & Time */}
                 <View style={{ flexDirection: 'row', gap: 48, marginBottom: 24 }}>
@@ -196,7 +199,7 @@ export default function RunDetailModal({ visible, onClose, run }: Props) {
                         <Text style={{ fontSize: 18 }}>🔥</Text>
                         <Text
                             style={{
-                                color: '#F47B20',
+                                color: COLORS.orange,
                                 fontSize: 15,
                                 fontWeight: 'bold',
                                 fontFamily: 'SpaceMono-Regular',
@@ -224,7 +227,7 @@ export default function RunDetailModal({ visible, onClose, run }: Props) {
                         width: 40,
                         height: 4,
                         borderRadius: 2,
-                        backgroundColor: '#F47B20',
+                        backgroundColor: COLORS.orange,
                         marginTop: 8,
                         marginBottom: 12,
                     }}

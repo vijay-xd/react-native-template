@@ -22,9 +22,10 @@ type Season = {
 
 type Props = {
     onLocationReady?: (lat: number, lng: number) => void;
+    hideHeader?: boolean;
 };
 
-export default function TerritoryMap({ onLocationReady }: Props) {
+export default function TerritoryMap({ onLocationReady, hideHeader = false }: Props) {
     const { user } = useAuth();
     const [location, setLocation] = useState<{ lat: number; lng: number } | null>(null);
     const [cellGeoJSON, setCellGeoJSON] = useState<any>(null);
@@ -128,52 +129,54 @@ export default function TerritoryMap({ onLocationReady }: Props) {
     return (
         <View style={{ flex: 1 }}>
             {/* Map Header */}
-            <View
-                style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    zIndex: 10,
-                    paddingHorizontal: 16,
-                    paddingTop: 8,
-                    paddingBottom: 12,
-                    backgroundColor: 'rgba(0,0,0,0.75)',
-                }}
-            >
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <View>
-                        <Text style={{ color: '#fff', fontSize: 18, fontWeight: 'bold', fontFamily: 'Inter-Bold' }}>
-                            Territory Map
-                        </Text>
-                        {season && (
-                            <Text style={{ color: '#888', fontSize: 13, fontFamily: 'Inter-Regular' }}>
-                                Season {season.number}: {season.name} •{' '}
-                                <Text style={{ color: '#84cc16' }}>{timeRemaining}</Text>
+            {!hideHeader && (
+                <View
+                    style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        zIndex: 10,
+                        paddingHorizontal: 16,
+                        paddingTop: 8,
+                        paddingBottom: 12,
+                        backgroundColor: 'rgba(0,0,0,0.75)',
+                    }}
+                >
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <View>
+                            <Text style={{ color: '#fff', fontSize: 18, fontWeight: 'bold', fontFamily: 'Inter-Bold' }}>
+                                Territory Map
                             </Text>
-                        )}
-                    </View>
+                            {season && (
+                                <Text style={{ color: '#888', fontSize: 13, fontFamily: 'Inter-Regular' }}>
+                                    Season {season.number}: {season.name} •{' '}
+                                    <Text style={{ color: '#84cc16' }}>{timeRemaining}</Text>
+                                </Text>
+                            )}
+                        </View>
 
-                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
-                        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
-                            <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: '#84cc16' }} />
-                            <Text style={{ color: '#ccc', fontSize: 12, fontFamily: 'SpaceMono-Regular' }}>
-                                {ownCellCount} CELLS
-                            </Text>
-                        </View>
-                        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
-                            <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: '#ef4444' }} />
-                            <Text style={{ color: '#ccc', fontSize: 12, fontFamily: 'SpaceMono-Regular' }}>ENEMY</Text>
-                        </View>
-                        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
-                            <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: '#22c55e' }} />
-                            <Text style={{ color: '#22c55e', fontSize: 12, fontWeight: 'bold', fontFamily: 'SpaceMono-Regular' }}>
-                                LIVE
-                            </Text>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
+                            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
+                                <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: '#84cc16' }} />
+                                <Text style={{ color: '#ccc', fontSize: 12, fontFamily: 'SpaceMono-Regular' }}>
+                                    {ownCellCount} CELLS
+                                </Text>
+                            </View>
+                            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
+                                <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: '#ef4444' }} />
+                                <Text style={{ color: '#ccc', fontSize: 12, fontFamily: 'SpaceMono-Regular' }}>ENEMY</Text>
+                            </View>
+                            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
+                                <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: '#22c55e' }} />
+                                <Text style={{ color: '#22c55e', fontSize: 12, fontWeight: 'bold', fontFamily: 'SpaceMono-Regular' }}>
+                                    LIVE
+                                </Text>
+                            </View>
                         </View>
                     </View>
                 </View>
-            </View>
+            )}
 
             {/* Mapbox Map */}
             <Mapbox.MapView

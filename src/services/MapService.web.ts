@@ -1,5 +1,6 @@
 import { latLngToCell, cellToBoundary } from 'h3-js';
 import { supabase } from '../lib/supabase';
+import { COLORS } from '../constants/theme';
 
 // No Mapbox import on web!
 
@@ -77,11 +78,11 @@ export function cellsToGeoJSON(
                 cellType: cell.cell_type,
                 isOwn,
                 fillColor: isOwn
-                    ? (cell.crew_color || '#84cc16')
-                    : '#ef4444',
+                    ? (cell.crew_color || COLORS.primary)
+                    : COLORS.red,
                 strokeColor: isOwn
-                    ? (cell.crew_color || '#84cc16')
-                    : '#ef4444',
+                    ? (cell.crew_color || COLORS.primary)
+                    : COLORS.red,
             },
             geometry: {
                 type: 'Polygon' as const,

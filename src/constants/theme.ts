@@ -15,7 +15,7 @@ export const COLORS = {
     primaryAlpha: (opacity: number) => `rgba(132, 204, 22, ${opacity})`,
 
     // ─── ACCENT COLORS ───
-    orange: '#F47B20',       // Distance card, fire icon, notification bell
+    orange: '#8fd22bff',       // Distance card, fire icon, notification bell
     gold: '#f59e0b',         // XP rewards, legendary rarity, gold medals
     red: '#ef4444',          // Enemy cells, errors, danger, exit buttons
     green: '#22c55e',        // Online status, open rooms, success

@@ -1,12 +1,14 @@
 import React, { useEffect, useRef } from 'react';
+import { COLORS } from '../constants/theme';
 import { View, Text, Animated, Easing } from 'react-native';
+
 
 // ─────────────────────────────────────────────
 // CellCaptureToast — Animated Territory Capture Notification
 // Slides in from top, pulses, then auto-dismisses
 // ─────────────────────────────────────────────
 
-const NEON = '#84cc16';
+const NEON = COLORS.primary;
 const TOAST_DURATION = 2500; // Auto-dismiss after 2.5s
 
 interface Props {

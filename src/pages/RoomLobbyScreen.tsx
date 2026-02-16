@@ -1,4 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { COLORS } from '../constants/theme';
+
 import {
     View,
     Text,
@@ -27,7 +29,7 @@ import {
 } from '../services/RunRoomService';
 import { useAuth } from '../context/AuthContext';
 
-const NEON = '#84cc16';
+const NEON = COLORS.primary;
 
 type Props = {
     roomId: string;

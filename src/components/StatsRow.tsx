@@ -1,6 +1,6 @@
-import React from 'react';
 import { View, Text } from 'react-native';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { COLORS } from '../constants/theme';
 
 export default function StatsRow() {
     return (
@@ -9,7 +9,7 @@ export default function StatsRow() {
             <View
                 style={{
                     flex: 1,
-                    backgroundColor: '#252525',
+                    backgroundColor: COLORS.elevated,
                     borderRadius: 22,
                     paddingHorizontal: 18,
                     paddingVertical: 20,
@@ -25,7 +25,7 @@ export default function StatsRow() {
                             justifyContent: 'center',
                             marginRight: 10,
                         }}>
-                        <MaterialCommunityIcons name="shoe-sneaker" size={18} color="#4A90D9" />
+                        <MaterialCommunityIcons name="shoe-sneaker" size={18} color={COLORS.blue} />
                     </View>
                     <Text style={{ color: '#8e8e8e', fontSize: 14, fontWeight: '500' }}>Daily Steps</Text>
                 </View>
@@ -43,7 +43,7 @@ export default function StatsRow() {
             <View
                 style={{
                     flex: 1,
-                    backgroundColor: '#252525',
+                    backgroundColor: COLORS.elevated,
                     borderRadius: 22,
                     paddingHorizontal: 18,
                     paddingVertical: 20,
@@ -59,7 +59,7 @@ export default function StatsRow() {
                             justifyContent: 'center',
                             marginRight: 10,
                         }}>
-                        <Ionicons name="heart" size={18} color="#4CD964" />
+                        <Ionicons name="heart" size={18} color={COLORS.green} />
                     </View>
                     <Text style={{ color: '#8e8e8e', fontSize: 14, fontWeight: '500' }}>Heart Rate</Text>
                 </View>
