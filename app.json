@@ -26,7 +26,7 @@
         "@rnmapbox/maps",
         {
           "RNMapboxMapsImpl": "mapbox",
-          "RNMapboxMapsDownloadToken": "pk.eyJ1Ijoia2l2aWpheTA5IiwiYSI6ImNtbGgxMjR5azAwbDIzZ3F3bG9icmtvbmcifQ.bOaVvvXvrxu6HM8RCyggYQ"
+          "RNMapboxMapsDownloadToken": "sk.eyJ1Ijoia2l2aWpheTA5IiwiYSI6ImNtbHBkbzNxYjE3NTQzZ3NjdmRvdGdzZmIifQ._WJdb4Ku_JVcTh73LVz2KA"
         }
       ]
     ],
@@ -48,7 +48,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#000000"
-      }
+      },
+      "permissions": [
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.anonymous.runit"
     }
   }
 }
